@@ -1,0 +1,8 @@
+GameProject {
+ ID "WeaponCameraShake"
+ GUID "596C1DEFB332C0B1"
+ TITLE "WeaponCameraShake"
+ Dependencies {
+  "58D0FB3206B6F859"
+ }
+}
