@@ -1,21 +1,25 @@
 modded class SCR_CharacterControllerComponent : CharacterControllerComponent
 {
+	private static PlayerController s_PlayerController;
+	
 	IEntity m_Owner;
-	PlayerController m_PlayerController;
-	EventHandlerManagerComponent m_EventHandlerManager = null;
+	EventHandlerManagerComponent m_EventHandlerManager;
 
 	override void OnInit(IEntity owner)
 	{
+		if (!s_PlayerController)
+		{
+			s_PlayerController = GetGame().GetPlayerController();
+		}
 		m_Owner = owner;
-		m_PlayerController = GetGame().GetPlayerController();
 		m_EventHandlerManager = EventHandlerManagerComponent.Cast(owner.FindComponent(EventHandlerManagerComponent));
 		m_EventHandlerManager.RegisterScriptHandler("OnAmmoCountChanged", this, OnAmmoCountChanged, true);
 	}
 
 	private void OnAmmoCountChanged(BaseWeaponComponent weapon, BaseMuzzleComponent muzzle, BaseMagazineComponent magazine, int ammoCount, bool isBarrelChambered)
 	{
-		IEntity player = m_PlayerController.GetControlledEntity();
-		if (player == m_Owner)
+		IEntity playerControlledEntity = s_PlayerController.GetControlledEntity();
+		if (m_Owner == playerControlledEntity)
 		{
 			AddCameraShake();
 		}
