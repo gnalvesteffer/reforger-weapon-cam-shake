@@ -7,6 +7,8 @@ modded class SCR_CharacterControllerComponent : CharacterControllerComponent
 
 	override void OnInit(IEntity owner)
 	{
+		super.OnInit(owner);
+		
 		if (!s_PlayerController)
 		{
 			s_PlayerController = GetGame().GetPlayerController();
